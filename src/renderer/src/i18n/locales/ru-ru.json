@@ -112,7 +112,8 @@
       "topics.list": "Список топиков",
       "topics.move_to": "Переместить в",
       "topics.title": "Топики",
-      "translate": "Перевести"
+      "translate": "Перевести",
+      "resend": "Переотправить"
     },
     "common": {
       "and": "и",
@@ -417,6 +418,7 @@
       "models.translate_model_prompt_title": "Модель перевода",
       "models.topic_naming_model_setting_title": "Настройки модели именования топика",
       "models.enable_topic_naming": "Автоматическое переименование топика",
+      "models.topic_naming_prompt": "Подсказка для именования топика",
       "provider": {
         "add.name": "Имя провайдера",
         "add.name.placeholder": "Пример: OpenAI",
@@ -585,7 +587,18 @@
       "embedding": "Встраиваемые модели",
       "embedding_model": "Встраиваемые модели",
       "embedding_model_tooltip": "Добавьте в настройки->модель сервиса->управление",
-      "dimensions": "{{dimensions}} мер"
+      "dimensions": "{{dimensions}} мер",
+      "custom_parameters": "Пользовательские параметры",
+      "add_parameter": "Добавить параметр",
+      "parameter_name": "Имя параметра",
+      "parameter_type": {
+        "string": "Текст",
+        "number": "Число",
+        "boolean": "Логическое"
+      }
+    },
+    "prompts": {
+      "summarize": "Вы - эксперт в общении, который суммирует разговоры пользователя в 10-символьном заголовке, совпадающем с языком пользователя, без использования знаков препинания и других специальных символов"
     }
   }
 }

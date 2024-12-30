@@ -112,7 +112,8 @@
       "topics.list": "話題列表",
       "topics.move_to": "移動到",
       "topics.title": "話題",
-      "translate": "翻譯"
+      "translate": "翻譯",
+      "resend": "重新發送"
     },
     "common": {
       "and": "與",
@@ -167,7 +168,7 @@
       "conversation_details": "會話詳情",
       "conversation_history": "會話歷史",
       "created": "創建時間",
-      "last_updated": "最後��新",
+      "last_updated": "最後更新",
       "messages": "訊息數",
       "user": "用戶"
     },
@@ -417,6 +418,7 @@
       "models.translate_model_prompt_title": "翻譯模型提示詞",
       "models.topic_naming_model_setting_title": "話題命名模型設定",
       "models.enable_topic_naming": "話題自動重命名",
+      "models.topic_naming_prompt": "話題命名提示詞",
       "provider": {
         "add.name": "提供者名稱",
         "add.name.placeholder": "例如：OpenAI",
@@ -573,7 +575,18 @@
       "embedding": "嵌入模型",
       "embedding_model": "嵌入模型",
       "embedding_model_tooltip": "在设置->模型服务中点击管理按钮添加",
-      "dimensions": "{{dimensions}} 維"
+      "dimensions": "{{dimensions}} 維",
+      "custom_parameters": "自定義參數",
+      "add_parameter": "添加參數",
+      "parameter_name": "參數名稱",
+      "parameter_type": {
+        "string": "文字",
+        "number": "數字",
+        "boolean": "布林值"
+      }
+    },
+    "prompts": {
+      "summarize": "你是一名擅長會話的助理，你需要將用戶的會話總結為 10 個字以內的標題，標題語言與用戶的首要語言一致，不要使用標點符號和其他特殊符號"
     }
   }
 }

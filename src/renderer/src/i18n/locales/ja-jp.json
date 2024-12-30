@@ -112,7 +112,8 @@
       "topics.list": "トピックリスト",
       "topics.move_to": "移動先",
       "topics.title": "トピック",
-      "translate": "翻訳"
+      "translate": "翻訳",
+      "resend": "再送信"
     },
     "common": {
       "and": "と",
@@ -415,6 +416,7 @@
       "models.translate_model_prompt_title": "翻訳モデルのプロンプト",
       "models.topic_naming_model_setting_title": "トピック命名モデルの設定",
       "models.enable_topic_naming": "トピックの自動命名",
+      "models.topic_naming_prompt": "トピック命名プロンプト",
       "provider": {
         "add.name": "プロバイダー名",
         "add.name.placeholder": "例：OpenAI",
@@ -567,7 +569,19 @@
       "free": "無料モデル",
       "embedding": "埋め込みモデル",
       "embedding_model": "埋め込みモデル",
-      "embedding_model_tooltip": "設定->モデルサービス->管理で追加"
+      "embedding_model_tooltip": "設定->モデルサービス->管理で追加",
+      "dimensions": "{{dimensions}} 次元",
+      "custom_parameters": "カスタムパラメータ",
+      "add_parameter": "パラメータを追加",
+      "parameter_name": "パラメータ名",
+      "parameter_type": {
+        "string": "テキスト",
+        "number": "数値",
+        "boolean": "真偽値"
+      }
+    },
+    "prompts": {
+      "summarize": "あなたは会話を得意とするアシスタントです。ユーザーの会話を10文字以内のタイトルに要約し、ユーザーの主言語と一致していることを確認してください。句読点や特殊記号は使用しないでください。"
     }
   }
 }

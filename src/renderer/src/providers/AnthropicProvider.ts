@@ -2,7 +2,8 @@ import Anthropic from '@anthropic-ai/sdk'
 import { MessageCreateParamsNonStreaming, MessageParam } from '@anthropic-ai/sdk/resources'
 import { DEFAULT_MAX_TOKENS } from '@renderer/config/constant'
 import { isEmbeddingModel } from '@renderer/config/models'
-import { SUMMARIZE_PROMPT } from '@renderer/config/prompts'
+import { getStoreSetting } from '@renderer/hooks/useSettings'
+import i18n from '@renderer/i18n'
 import { getAssistantSettings, getDefaultModel, getTopNamingModel } from '@renderer/services/AssistantService'
 import { EVENT_NAMES } from '@renderer/services/EventService'
 import { filterContextMessages } from '@renderer/services/MessagesService'
@@ -86,7 +87,8 @@ export default class AnthropicProvider extends BaseProvider {
       max_tokens: maxTokens || DEFAULT_MAX_TOKENS,
       temperature: assistant?.settings?.temperature,
       top_p: assistant?.settings?.topP,
-      system: assistant.prompt
+      system: assistant.prompt,
+      ...this.getCustomParameters(assistant)
     }
 
     let time_first_token_millsec = 0
@@ -188,7 +190,7 @@ export default class AnthropicProvider extends BaseProvider {
 
     const systemMessage = {
       role: 'system',
-      content: SUMMARIZE_PROMPT
+      content: (getStoreSetting('topicNamingPrompt') as string) || i18n.t('prompts.summarize')
     }
 
     const userMessage = {
