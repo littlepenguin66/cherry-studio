@@ -45,14 +45,14 @@ class KnowledgeService {
               azureOpenAIApiDeploymentName: model,
               azureOpenAIApiInstanceName: getInstanceName(baseURL),
               dimensions,
-              batchSize: 15
+              batchSize: 10
             })
           : new OpenAiEmbeddings({
               model,
               apiKey,
               configuration: { baseURL },
               dimensions,
-              batchSize: 15
+              batchSize: 10
             })
       )
       .setVectorDatabase(new LibSqlDb({ path: path.join(this.storageDir, id) }))
@@ -122,7 +122,7 @@ class KnowledgeService {
         return await ragApplication.addLoader(new ExcelLoader({ filePathOrUrl: file.path }) as any, forceReload)
       }
 
-      if (['.md', '.mdx'].includes(file.ext)) {
+      if (['.md'].includes(file.ext)) {
         return await ragApplication.addLoader(new MarkdownLoader({ filePathOrUrl: file.path }) as any, forceReload)
       }
 
