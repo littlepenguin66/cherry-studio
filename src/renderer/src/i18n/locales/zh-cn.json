@@ -280,7 +280,9 @@
       "regenerate.confirm": "这将覆盖已生成的图片，是否继续？",
       "seed": "随机种子",
       "seed_tip": "相同的种子和提示词可以生成相似的图片",
-      "title": "图片"
+      "title": "图片",
+      "prompt_enhancement": "提示词增强",
+      "prompt_enhancement_tip": "开启后将提示重写为详细的、适合模型的版本"
     },
     "provider": {
       "aihubmix": "AiHubMix",
@@ -363,7 +365,12 @@
         "webdav.minutes": "分钟",
         "webdav.restore.button": "从 WebDAV 恢复",
         "webdav.title": "WebDAV",
-        "webdav.user": "WebDAV 用户名"
+        "webdav.user": "WebDAV 用户名",
+        "webdav.syncStatus": "同步状态",
+        "webdav.autoSync.off": "关闭",
+        "webdav.noSync": "等待下次同步",
+        "webdav.syncError": "同步错误",
+        "webdav.lastSync": "上次同步时间"
       },
       "display.title": "显示设置",
       "font_size.title": "消息字体大小",
@@ -557,6 +564,7 @@
       "directory_placeholder": "请输入目录路径",
       "model_info": "模型信息",
       "not_support": "知识库数据库引擎已更新，该知识库将不再支持，请重新创建知识库",
+      "no_provider": "知识库模型服务商丢失，该知识库将不再支持，请重新创建知识库",
       "source": "来源"
     },
     "models": {
@@ -583,7 +591,8 @@
       "parameter_type": {
         "string": "文本",
         "number": "数字",
-        "boolean": "布尔值"
+        "boolean": "布尔值",
+        "json": "JSON"
       }
     },
     "prompts": {

@@ -279,7 +279,9 @@
       "regenerate.confirm": "This will replace your existing generated images. Do you want to continue?",
       "seed": "Seed",
       "seed_tip": "The same seed and prompt can produce similar images",
-      "title": "Images"
+      "title": "Images",
+      "prompt_enhancement": "Prompt Enhancement",
+      "prompt_enhancement_tip": "Rewrite prompts into detailed, model-friendly versions when switched on"
     },
     "provider": {
       "aihubmix": "AiHubMix",
@@ -362,7 +364,12 @@
         "webdav.minutes": "Minutes",
         "webdav.restore.button": "Restore from WebDAV",
         "webdav.title": "WebDAV",
-        "webdav.user": "WebDAV User"
+        "webdav.user": "WebDAV User",
+        "webdav.syncStatus": "Sync Status",
+        "webdav.autoSync.off": "Off",
+        "webdav.noSync": "Waiting for next sync",
+        "webdav.syncError": "Sync Error",
+        "webdav.lastSync": "Last Sync"
       },
       "display.title": "Display Settings",
       "font_size.title": "Message font size",
@@ -568,6 +575,7 @@
       "directory_placeholder": "Enter Directory Path",
       "model_info": "Model Info",
       "not_support": "Knowledge base database engine updated, the knowledge base will no longer be supported, please create a new knowledge base",
+      "no_provider": "Knowledge base model provider is not set, the knowledge base will no longer be supported, please create a new knowledge base",
       "source": "Source"
     },
     "models": {
@@ -594,7 +602,8 @@
       "parameter_type": {
         "string": "Text",
         "number": "Number",
-        "boolean": "Boolean"
+        "boolean": "Boolean",
+        "json": "JSON"
       }
     },
     "prompts": {

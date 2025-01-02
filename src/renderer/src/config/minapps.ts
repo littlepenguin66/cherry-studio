@@ -8,6 +8,7 @@ import FeloAppLogo from '@renderer/assets/images/apps/felo.png'
 import GeminiAppLogo from '@renderer/assets/images/apps/gemini.png'
 import GensparkLogo from '@renderer/assets/images/apps/genspark.jpg'
 import GithubCopilotLogo from '@renderer/assets/images/apps/github-copilot.webp'
+import HikaLogo from '@renderer/assets/images/apps/hika.webp'
 import HuggingChatLogo from '@renderer/assets/images/apps/huggingchat.svg'
 import KimiAppLogo from '@renderer/assets/images/apps/kimi.jpg'
 import MetasoAppLogo from '@renderer/assets/images/apps/metaso.webp'
@@ -224,6 +225,13 @@ const _apps: MinAppType[] = [
     name: 'ThinkAny',
     logo: ThinkAnyLogo,
     url: 'https://thinkany.ai/',
+    bodered: true
+  },
+  {
+    id: 'hika',
+    name: 'Hika',
+    logo: HikaLogo,
+    url: 'https://hika.fyi/',
     bodered: true
   },
   {

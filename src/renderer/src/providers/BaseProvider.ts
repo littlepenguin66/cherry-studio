@@ -2,8 +2,8 @@ import { REFERENCE_PROMPT } from '@renderer/config/prompts'
 import { getOllamaKeepAliveTime } from '@renderer/hooks/useOllama'
 import { getKnowledgeReferences } from '@renderer/services/KnowledgeService'
 import store from '@renderer/store'
-import { Assistant, Message, Model, Provider, Suggestion } from '@renderer/types'
-import { delay } from '@renderer/utils'
+import { Assistant, GenerateImageParams, Message, Model, Provider, Suggestion } from '@renderer/types'
+import { delay, isJSON } from '@renderer/utils'
 import OpenAI from 'openai'
 
 import { CompletionsParams } from '.'
@@ -26,16 +26,7 @@ export default abstract class BaseProvider {
   abstract generateText({ prompt, content }: { prompt: string; content: string }): Promise<string>
   abstract check(): Promise<{ valid: boolean; error: Error | null }>
   abstract models(): Promise<OpenAI.Models.Model[]>
-  abstract generateImage(_params: {
-    prompt: string
-    negativePrompt: string
-    imageSize: string
-    batchSize: number
-    seed?: string
-    numInferenceSteps: number
-    guidanceScale: number
-    signal?: AbortSignal
-  }): Promise<string[]>
+  abstract generateImage(params: GenerateImageParams): Promise<string[]>
   abstract getEmbeddingDimensions(model: Model): Promise<number>
 
   public getBaseURL(): string {
@@ -101,13 +92,16 @@ export default abstract class BaseProvider {
 
   protected getCustomParameters(assistant: Assistant) {
     return (
-      assistant?.settings?.customParameters?.reduce(
-        (acc, param) => ({
-          ...acc,
-          [param.name]: param.value
-        }),
-        {}
-      ) || {}
+      assistant?.settings?.customParameters?.reduce((acc, param) => {
+        if (!param.name?.trim()) {
+          return acc
+        }
+        if (param.type === 'json') {
+          const value = param.value as string
+          return { ...acc, [param.name]: isJSON(value) ? JSON.parse(value) : value }
+        }
+        return { ...acc, [param.name]: param.value }
+      }, {}) || {}
     )
   }
 }
