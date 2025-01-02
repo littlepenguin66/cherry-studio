@@ -4,6 +4,7 @@ import CopyIcon from '@renderer/components/Icons/CopyIcon'
 import Scrollbar from '@renderer/components/Scrollbar'
 import { useAgents } from '@renderer/hooks/useAgents'
 import { useAssistant, useAssistants } from '@renderer/hooks/useAssistant'
+import { modelGenerating } from '@renderer/hooks/useRuntime'
 import { useSettings } from '@renderer/hooks/useSettings'
 import AssistantSettingsPopup from '@renderer/pages/settings/AssistantSettings'
 import { getDefaultTopic } from '@renderer/services/AssistantService'
@@ -41,7 +42,7 @@ const Assistants: FC<Props> = ({
 
   const onDelete = useCallback(
     (assistant: Assistant) => {
-      const _assistant = last(assistants.filter((a) => a.id !== assistant.id))
+      const _assistant: Assistant | undefined = last(assistants.filter((a) => a.id !== assistant.id))
       _assistant ? setActiveAssistant(_assistant) : onCreateDefaultAssistant()
       removeAssistant(assistant.id)
     },
@@ -117,13 +118,8 @@ const Assistants: FC<Props> = ({
   )
 
   const onSwitchAssistant = useCallback(
-    (assistant: Assistant): any => {
-      if (generating) {
-        return window.message.warning({
-          content: t('message.switch.disabled'),
-          key: 'switch-assistant'
-        })
-      }
+    async (assistant: Assistant) => {
+      await modelGenerating()
 
       if (topicPosition === 'left' && clickAssistantToShowTopic) {
         EventEmitter.emit(EVENT_NAMES.SWITCH_TOPIC_SIDEBAR)
@@ -131,11 +127,11 @@ const Assistants: FC<Props> = ({
 
       setActiveAssistant(assistant)
     },
-    [clickAssistantToShowTopic, generating, setActiveAssistant, t, topicPosition]
+    [clickAssistantToShowTopic, setActiveAssistant, topicPosition]
   )
 
   return (
-    <Container>
+    <Container className="assistants-tab">
       <DragableList
         list={assistants}
         onUpdate={updateAssistants}

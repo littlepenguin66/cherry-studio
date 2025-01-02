@@ -13,7 +13,7 @@ import TranslateButton from '@renderer/components/TranslateButton'
 import { isVisionModel, isWebSearchModel } from '@renderer/config/models'
 import db from '@renderer/databases'
 import { useAssistant } from '@renderer/hooks/useAssistant'
-import { useRuntime } from '@renderer/hooks/useRuntime'
+import { modelGenerating, useRuntime } from '@renderer/hooks/useRuntime'
 import { useMessageStyle, useSettings } from '@renderer/hooks/useSettings'
 import { useShortcut, useShortcutDisplay } from '@renderer/hooks/useShortcuts'
 import { useShowTopics } from '@renderer/hooks/useStore'
@@ -25,7 +25,7 @@ import { translateText } from '@renderer/services/TranslateService'
 import store, { useAppDispatch, useAppSelector } from '@renderer/store'
 import { setGenerating, setSearching } from '@renderer/store/runtime'
 import { Assistant, FileType, KnowledgeBase, Message, Topic } from '@renderer/types'
-import { delay, getFileExtension, uuid } from '@renderer/utils'
+import { classNames, delay, getFileExtension, uuid } from '@renderer/utils'
 import { documentExts, imageExts, textExts } from '@shared/config/constant'
 import { Button, Popconfirm, Tooltip } from 'antd'
 import TextArea, { TextAreaRef } from 'antd/es/input/TextArea'
@@ -97,9 +97,7 @@ const Inputbar: FC<Props> = ({ assistant: _assistant, setActiveTopic }) => {
   _base = selectedKnowledgeBase
 
   const sendMessage = useCallback(async () => {
-    if (generating) {
-      return
-    }
+    await modelGenerating()
 
     if (inputEmpty) {
       return
@@ -207,10 +205,7 @@ const Inputbar: FC<Props> = ({ assistant: _assistant, setActiveTopic }) => {
   }
 
   const addNewTopic = useCallback(async () => {
-    if (generating) {
-      window.message.warning({ content: t('message.switch.disabled'), key: 'generating' })
-      return
-    }
+    await modelGenerating()
 
     const topic = getDefaultTopic(assistant.id)
 
@@ -226,7 +221,7 @@ const Inputbar: FC<Props> = ({ assistant: _assistant, setActiveTopic }) => {
     setActiveTopic(topic)
 
     clickAssistantToShowTopic && setTimeout(() => EventEmitter.emit(EVENT_NAMES.SHOW_TOPIC_SIDEBAR), 0)
-  }, [addTopic, assistant, clickAssistantToShowTopic, generating, setActiveTopic, setModel, t])
+  }, [addTopic, assistant, clickAssistantToShowTopic, setActiveTopic, setModel])
 
   const clearTopic = async () => {
     if (generating) {
@@ -388,9 +383,12 @@ const Inputbar: FC<Props> = ({ assistant: _assistant, setActiveTopic }) => {
   }
 
   return (
-    <Container onDragOver={handleDragOver} onDrop={handleDrop}>
+    <Container onDragOver={handleDragOver} onDrop={handleDrop} className="inputbar">
       <AttachmentPreview files={files} setFiles={setFiles} />
-      <InputBarContainer id="inputbar" className={inputFocus ? 'focus' : ''} ref={containerRef}>
+      <InputBarContainer
+        id="inputbar"
+        className={classNames('inputbar-container', inputFocus && 'focus')}
+        ref={containerRef}>
         <Textarea
           value={text}
           onChange={(e) => setText(e.target.value)}

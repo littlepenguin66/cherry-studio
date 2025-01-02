@@ -11,10 +11,11 @@ import {
 } from '@ant-design/icons'
 import SelectModelPopup from '@renderer/components/Popups/SelectModelPopup'
 import TextEditPopup from '@renderer/components/Popups/TextEditPopup'
+import { modelGenerating } from '@renderer/hooks/useRuntime'
 import { EVENT_NAMES, EventEmitter } from '@renderer/services/EventService'
 import { translateText } from '@renderer/services/TranslateService'
 import { Message, Model } from '@renderer/types'
-import { removeTrailingDoubleSpaces } from '@renderer/utils'
+import { removeTrailingDoubleSpaces, uuid } from '@renderer/utils'
 import { Button, Dropdown, Popconfirm, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { FC, useCallback, useMemo, useState } from 'react'
@@ -69,7 +70,8 @@ const MessageMenubar: FC<Props> = (props) => {
     [setModel]
   )
 
-  const onNewBranch = useCallback(() => {
+  const onNewBranch = useCallback(async () => {
+    await modelGenerating()
     EventEmitter.emit(EVENT_NAMES.NEW_BRANCH, index)
     window.message.success({
       content: t('chat.message.new.branch.created'),
@@ -77,7 +79,8 @@ const MessageMenubar: FC<Props> = (props) => {
     })
   }, [index, t])
 
-  const onResend = useCallback(() => {
+  const onResend = useCallback(async () => {
+    await modelGenerating()
     const _messages = onGetMessages?.() || []
     const index = _messages.findIndex((m) => m.id === message.id)
     const nextIndex = index + 1
@@ -92,7 +95,12 @@ const MessageMenubar: FC<Props> = (props) => {
         translatedContent: undefined
       })
     }
-  }, [assistantModel?.id, message.id, model?.id, onGetMessages])
+
+    if (!nextMessage) {
+      onDeleteMessage?.(message)
+      EventEmitter.emit(EVENT_NAMES.SEND_MESSAGE, { ...message, id: uuid() })
+    }
+  }, [assistantModel?.id, message, model?.id, onDeleteMessage, onGetMessages])
 
   const onEdit = useCallback(async () => {
     let resendMessage = false
@@ -168,11 +176,13 @@ const MessageMenubar: FC<Props> = (props) => {
   )
 
   const onAtModelRegenerate = async () => {
+    await modelGenerating()
     const selectedModel = await SelectModelPopup.show({ model })
     selectedModel && onRegenerate(selectedModel)
   }
 
-  const onDeleteAndRegenerate = () => {
+  const onDeleteAndRegenerate = async () => {
+    await modelGenerating()
     onEditMessage?.({
       ...message,
       content: '',
